@@ -40,4 +40,11 @@ public class TestProjectServices {
 				project, 1));
 	}
 
+	@Test
+	public void itShoulFindAllEmployeeesProject() {
+
+		Assert.assertEquals(1, projectServicesRemote.findAllEmployeesProject(1)
+				.size());
+	}
+
 }

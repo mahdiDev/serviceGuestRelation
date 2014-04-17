@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Employee implements Serializable {
@@ -15,7 +15,7 @@ public class Employee implements Serializable {
 
 	private int id;
 	private String name;
-	
+
 	private Project project;
 
 	public Employee() {
@@ -42,7 +42,7 @@ public class Employee implements Serializable {
 		return serialVersionUID;
 	}
 
-	@OneToOne(mappedBy="employee")
+	@ManyToOne
 	public Project getProject() {
 		return project;
 	}

@@ -1,5 +1,7 @@
 package tn.edu.esprit.eskimooc.services.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,13 +33,25 @@ public class ProjectServices implements ProjectServicesRemote,
 		boolean b = false;
 		try {
 			Employee employeeFound = entityManager.find(Employee.class, id);
-			project.setEmployee(employeeFound);
+
+			List<Employee> employees = project.getEmployees();
+			employees.add(employeeFound);
+
+			project.setEmployees(employees);
+
 			entityManager.persist(project);
 			b = true;
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return b;
+	}
+
+	@Override
+	public List<Employee> findAllEmployeesProject(int id) {
+		Project projectFound=entityManager.find(Project.class, id);
+		
+		return projectFound.getEmployees();
 	}
 
 }
