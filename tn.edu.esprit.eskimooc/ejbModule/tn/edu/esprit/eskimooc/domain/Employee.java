@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Employee implements Serializable {
@@ -14,6 +15,8 @@ public class Employee implements Serializable {
 
 	private int id;
 	private String name;
+	
+	private Project project;
 
 	public Employee() {
 	}
@@ -37,6 +40,15 @@ public class Employee implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	@OneToOne(mappedBy="employee")
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }

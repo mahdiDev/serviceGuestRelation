@@ -32,7 +32,6 @@ public class TestEmployeeServices {
 	}
 
 	@Test
-	@Ignore
 	public void itShouldAddEmployee() {
 		Employee employee = new Employee();
 		employee.setId(1);
