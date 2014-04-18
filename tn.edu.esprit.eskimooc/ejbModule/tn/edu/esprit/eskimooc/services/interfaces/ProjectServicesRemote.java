@@ -10,7 +10,9 @@ import tn.edu.esprit.eskimooc.domain.Project;
 @Remote
 public interface ProjectServicesRemote {
 
-	boolean assignProjectToEmployee(Project project, int id);
+	boolean assignProjectToEmployees(Project project, List<Employee> employees);
 
 	List<Employee> findAllEmployeesProject(int id);
+	
+	boolean deleteProjectById(int id);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import tn.edu.esprit.eskimooc.domain.Employee;
 import tn.edu.esprit.eskimooc.domain.Project;
@@ -29,16 +30,11 @@ public class ProjectServices implements ProjectServicesRemote,
 	}
 
 	@Override
-	public boolean assignProjectToEmployee(Project project, int id) {
+	public boolean assignProjectToEmployees(Project project,
+			List<Employee> employees) {
 		boolean b = false;
 		try {
-			Employee employeeFound = entityManager.find(Employee.class, id);
-
-			List<Employee> employees = project.getEmployees();
-			employees.add(employeeFound);
-
-			project.setEmployees(employees);
-
+			project.linkEmployeesToThisProject(employees);
 			entityManager.persist(project);
 			b = true;
 		} catch (Exception e) {
@@ -49,9 +45,18 @@ public class ProjectServices implements ProjectServicesRemote,
 
 	@Override
 	public List<Employee> findAllEmployeesProject(int id) {
-		Project projectFound=entityManager.find(Project.class, id);
+		String jpql = "select e from Employee e where e.project.id=" + id;
+		Query query = entityManager.createQuery(jpql);
+
+		return query.getResultList();
+	}
+
+	@Override
+	public boolean deleteProjectById(int id) {
+		Project project = entityManager.find(Project.class, id);
+		entityManager.remove(project);
 		
-		return projectFound.getEmployees();
+		return true;
 	}
 
 }

@@ -3,6 +3,7 @@ package tn.edu.esprit.eskimooc.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Project implements Serializable {
 		this.description = description;
 	}
 
-	@OneToMany(mappedBy = "project",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "project",cascade=CascadeType.PERSIST)
 	public List<Employee> getEmployees() {
 		return employees;
 	}
@@ -50,5 +51,19 @@ public class Project implements Serializable {
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
+	public void linkEmployeesToThisProject(List<Employee> employees){
+		this.employees=employees;
+		for (Employee e : employees) {
+			e.setProject(this);
+		}
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 }
